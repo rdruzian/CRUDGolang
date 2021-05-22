@@ -1,4 +1,4 @@
-package sql
+package sqlclient
 
 import (
 	"awesomeProject/dbConn"
@@ -41,7 +41,7 @@ func CreateTableNews() error {
 	}
 	defer db.Close()
 
-	file, err := ioutil.ReadFile("./createDatabase.sql")
+	file, err := ioutil.ReadFile("./createTableNews.sql")
 
 	if err != nil {
 		fmt.Println("Erro ao ler arquivo de criação da tabela %v", err)
@@ -54,6 +54,32 @@ func CreateTableNews() error {
 	if err != nil {
 		fmt.Println("Erro ao criar tabela: %v", err)
 		return fmt.Errorf("Erro ao criar tabela: %v", err)
+	}
+
+	return err
+}
+
+func InsertDataNews() error {
+	db, err := dbConn.DbConn()
+	if err != nil {
+		fmt.Println("Erro ao iniciar a conexão com o banco de ddados")
+		return fmt.Errorf("Erro ao criar conexão com o banco de dados: %v", err)
+	}
+	defer db.Close()
+
+	file, err := ioutil.ReadFile("./insertNews.sql")
+
+	if err != nil {
+		fmt.Println("Erro ao ler arquivo para inserção da tabela %v", err)
+		return fmt.Errorf("Erro ao ler arquivo sql %v", err)
+	}
+
+	insereDadosTabelaNoticias := string(file)
+
+	_, err = db.Exec(insereDadosTabelaNoticias)
+	if err != nil {
+		fmt.Println("Erro ao inserir dados na tabela notícias: %v", err)
+		return fmt.Errorf("Erro ao inserir dados na tabela tabela: %v", err)
 	}
 
 	return err
