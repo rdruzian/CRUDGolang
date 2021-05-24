@@ -7,4 +7,5 @@ import (
 
 func Init () {
 	http.HandleFunc("/", api.Home)
+	//http.HandleFunc("/criabanco", api.CriaBanco)
 }

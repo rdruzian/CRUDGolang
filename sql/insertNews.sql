@@ -1,7 +1,7 @@
 create procedure News.insertNews(
     title varchar(150),
     category varchar(20),
-    text varchar(65535)
+    text TEXT
 )
 
 BEGIN
